@@ -38,4 +38,17 @@ class ProductCategoryController extends Controller
 
         return ResponseFormatter::success($category->paginate($limit), 'Data category berhasil diambil');
     }
+
+    public function add(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string']
+        ]);
+
+        $category = ProductCategory::create([
+            'name' => $request->name
+        ]);
+
+        return ResponseFormatter::success($category, 'Kategori Produk berhasil ditambahkan');
+    }
 }

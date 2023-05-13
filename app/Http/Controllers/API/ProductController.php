@@ -58,4 +58,14 @@ class ProductController extends Controller
 
         return ResponseFormatter::success($product->paginate($limit), 'Data produk berhasil diambil');
     }
+
+    public function add(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required'],
+            'description' => ['required', 'string'],
+            'tags' => ['required', 'string']
+        ]);
+    }
 }
