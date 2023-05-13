@@ -67,5 +67,15 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'tags' => ['required', 'string']
         ]);
+
+        $product = Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+            'tags' => $request->tags,
+            'categories_id' => $request->categories_id
+        ]);
+
+        return ResponseFormatter::success($product, 'Data Produk berhasil ditambahkan');
     }
 }

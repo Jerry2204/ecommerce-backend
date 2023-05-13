@@ -63,6 +63,6 @@ class TransactionController extends Controller
             ]);
         }
 
-        return ResponseFormatter::success($transaction.load('items.product'), 'Transaksi berhasil');
+        return ResponseFormatter::success($transaction->load(['items.product', 'items.product.category']), 'Transaksi berhasil');
     }
 }
