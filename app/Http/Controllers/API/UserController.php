@@ -91,4 +91,42 @@ class UserController extends Controller
     {
         return ResponseFormatter::success($request->user(), 'Data profile user berhasil diambil');
     }
+
+    public function updateProfile(Request $request)
+    {
+        try {
+            $request->validate([
+                'name' => ['string', 'required'],
+                'username' => ['required', 'string'],
+                'email' => ['required', 'email', ],
+                'phone' => ['required', 'string']
+            ]);
+
+            $form_data = $request->all();
+
+            $user = Auth::user();
+
+            if ($user) {
+                $user->update($form_data);
+
+                return ResponseFormatter::success($user, 'Profile updated');
+            }
+
+            return ResponseFormatter::error([
+            ], 'User Not Found', 404);
+        } catch (Exception $error) {
+            return ResponseFormatter::error([
+                'message' => 'Something went wrong',
+                'error' => $error
+            ], 'Authentication Failed', 500);
+        }
+
+    }
+
+    public function logout(Request $request)
+    {
+        $token = $request->user()->currentAccessToken()->delete();
+
+        return ResponseFormatter::success($token, 'Token Revoked');
+    }
 }
