@@ -20,7 +20,7 @@ class UserController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'username' => ['required', 'string', 'max:255', 'unique:users'],
                 'email' => ['required', 'string', 'max:255', 'unique:users', 'email'],
-                'phone' => ['required', 'string', 'max:255'],
+                'phone' => ['string', 'max:255'],
                 'password' => ['required', 'string', new Password]
             ]);
 
@@ -44,7 +44,7 @@ class UserController extends Controller
         } catch (Exception $error) {
             return ResponseFormatter::error([
                 'message' => 'Something went wrong',
-                'error' => $error
+                'error' => $error->getMessage(),
             ], 'Authentication Failed', 500);
         }
     }
